@@ -5,9 +5,9 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/arecibo
+    url: jdbc:mysql://34.133.191.110:3306/areciboai
     username: root
-    password: yuze2004
+    password: Arecibo2025!
     druid:
       initial-size: 5
       max-active: 1000
