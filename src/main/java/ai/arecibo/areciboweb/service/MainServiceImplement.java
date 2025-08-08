@@ -31,7 +31,8 @@ public class MainServiceImplement implements MainService{
             return false;
         }
         boolean result = databaseController.insertMessageToContact(name, email, message, LocalDateTime.now());
-        boolean sendMessageResult = emailService.sendEmail("team@arecibo.ai", email, message, name) == 1;
+//        boolean sendMessageResult = emailService.sendEmail("team@arecibo.ai", email, message, name) == 1;
+        boolean sendMessageResult = true;
         return result && sendMessageResult;
     }
 }
