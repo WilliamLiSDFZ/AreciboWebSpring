@@ -29,8 +29,8 @@ public class EmailService {
             
             helper.setFrom(from);
             helper.setTo(to);
-            helper.setSubject("hello");
-            helper.setText("This is a test. \n Received message from " + name + " with message :" + messageStr);
+            helper.setSubject("Thank you for contacting Arecibo");
+            helper.setText("Hi "+name+", \n" + messageStr);
             
             javaMailSender.send(message);
             return 1;

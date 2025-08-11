@@ -25,10 +25,10 @@ spring:
       connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
 
   mail:
-    host: smtp.gmail.com
+    host: smtp.office365.com
     port: 587
-    username: email@gmail.com
-    password: password
+    username: team@arecibo.ai
+    password: Arecib0!2025
     properties:
       mail:
         smtp:
