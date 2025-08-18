@@ -16,22 +16,22 @@ public class EmailService {
     /**
      * Sends an email with the specified content and sender details.
      *
-     * @param from the sender's email address; used for authentication
-     * @param to the recipient's email address
+     * @param from       the sender's email address; used for authentication
+     * @param to         the recipient's email address
      * @param messageStr the content of the email message
-     * @param name the sender's name to include in the message content
+     * @param name       the sender's name to include in the message content
      * @return 1 if the email was sent successfully, 0 if an error occurred
      */
-    public int sendEmail(String from, String to, String messageStr, String name) {
+    public int sendEmail(String from, String to, String subject, String messageStr, String name) {
         try {
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
-            
+
             helper.setFrom(from);
             helper.setTo(to);
-            helper.setSubject("Thank you for contacting Arecibo");
-            helper.setText("Hi "+name+", \n" + messageStr);
-            
+            helper.setSubject(subject);
+            helper.setText("Hi " + name + ", \n" + messageStr);
+
             javaMailSender.send(message);
             return 1;
         } catch (MessagingException mex) {

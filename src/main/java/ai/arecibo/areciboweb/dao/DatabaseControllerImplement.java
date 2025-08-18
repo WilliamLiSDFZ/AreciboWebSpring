@@ -41,6 +41,18 @@ public class DatabaseControllerImplement implements DatabaseController {
     }
 
     @Override
+    public boolean emailSubscribed(String email) {
+        Integer count;
+        try {
+            count = jdbcTemplate.queryForObject("select count(*) from subscribe where email=?", Integer.class, email);
+        } catch (Exception e) {
+            logger.error("Error inserting message to database", e);
+            return false;
+        }
+        return count >= 1;
+    }
+
+    @Override
     public boolean addSubscribe(String email, LocalDateTime time) {
         try {
             jdbcTemplate.update("INSERT INTO subscribe (email, time) VALUES (?, ?)", email, time);

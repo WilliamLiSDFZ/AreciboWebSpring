@@ -5,5 +5,7 @@ import java.time.LocalDateTime;
 public interface DatabaseController {
     boolean insertMessageToContact(String name, String email, String message, LocalDateTime time);
 
+    boolean emailSubscribed(String email);
+
     boolean addSubscribe(String email, LocalDateTime time);
 }
