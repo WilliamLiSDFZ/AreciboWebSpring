@@ -60,6 +60,13 @@ public class MainController {
     public Map<String, Object> handleSubscribe(@RequestBody SubscribeRequest request) {
         Map<String, Object> response = new HashMap<>();
 
+        String name = request.getName();
+        if (name != null) {
+            response.put("code",3);
+            response.put("result", "spam");
+            return response;
+        }
+
         SubscribeResult result = mainService.addSubscribe(request.getEmail());
 
         switch (result){
