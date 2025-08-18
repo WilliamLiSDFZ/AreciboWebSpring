@@ -39,4 +39,15 @@ public class DatabaseControllerImplement implements DatabaseController {
         }
         return true;
     }
+
+    @Override
+    public boolean addSubscribe(String email, LocalDateTime time) {
+        try {
+            jdbcTemplate.update("INSERT INTO subscribe (email, time) VALUES (?, ?)", email, time);
+        } catch (Exception e) {
+            logger.error("Error inserting subscribe to database", e);
+            return false;
+        }
+        return true;
+    }
 }

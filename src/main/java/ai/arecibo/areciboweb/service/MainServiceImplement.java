@@ -33,7 +33,15 @@ public class MainServiceImplement implements MainService{
         boolean result = databaseController.insertMessageToContact(name, email, message, LocalDateTime.now());
         String messageStr = "Thank you for contacting us. We will get back to you as soon as possible.\nPlease do not reply to this email.";
         boolean sendMessageResult = emailService.sendEmail("team@arecibo.ai", email, messageStr, name) == 1;
-//        emailService.sendEmail("team@arecibo.ai", "benny@arecibo.ai", "", name);
+        emailService.sendEmail("team@arecibo.ai", "benny@arecibo.ai", message, name);
+        emailService.sendEmail("team@arecibo.ai","sam@arecibo.ai", message, name);
         return result && sendMessageResult;
+    }
+
+    @Override
+    public boolean addSubscribe(String email) {
+        if (email == null) return false;
+        boolean result = databaseController.addSubscribe(email, LocalDateTime.now());
+        return result;
     }
 }

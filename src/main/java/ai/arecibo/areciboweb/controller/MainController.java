@@ -17,7 +17,7 @@ import java.util.Map;
 @Controller
 @CrossOrigin(origins = "https://arecibo.ai")
 @RequestMapping("/api")
-public class ContactUsController {
+public class MainController {
 
     @Autowired
     private MainService mainService;
@@ -34,7 +34,6 @@ public class ContactUsController {
                         .build())
                 .execute().returnContent().asString();
         JsonObject recaptcha_json = JsonParser.parseString(googleResponse).getAsJsonObject();
-        System.out.println(recaptcha_json);
 
         if (!recaptcha_json.get("success").getAsBoolean()) {
             response.put("code",2);
@@ -54,9 +53,20 @@ public class ContactUsController {
         return response;
     }
 
-    @GetMapping("/contact")
+    @PostMapping("/subscribe")
     @ResponseBody
-    public Map<String, Object> handleContactGet(@RequestBody ContactRequest contactRequest) throws IOException {
-        return handleContact(contactRequest);
+    public Map<String, Object> handleSubscribe(String email) {
+        Map<String, Object> response = new HashMap<>();
+
+        boolean result = mainService.addSubscribe(email);
+
+        if (result) {
+            response.put("code",0);
+            response.put("result", "success");
+        } else {
+            response.put("code",1);
+            response.put("result", "error");
+        }
+        return response;
     }
 } 
