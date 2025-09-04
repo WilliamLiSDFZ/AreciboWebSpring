@@ -34,11 +34,14 @@ public class MainServiceImplement implements MainService {
             return false;
         }
         boolean result = databaseController.insertMessageToContact(name, email, message, LocalDateTime.now());
-        String subjectStr = "Thank you for contacting Arecibo";
-        String messageStr = "Thank you for contacting us. We will get back to you as soon as possible.\nPlease do not reply to this email.";
-        boolean sendMessageResult = emailService.sendEmail("team@arecibo.ai", email, subjectStr, messageStr, name) == 1;
-        emailService.sendEmail("team@arecibo.ai", "benny@arecibo.ai", subjectStr, message, name);
-        emailService.sendEmail("team@arecibo.ai", "sam@arecibo.ai", subjectStr, message, name);
+        
+        // Send HTML confirmation email to user
+        boolean sendMessageResult = emailService.sendContactConfirmationEmail("team@arecibo.ai", email, name, email, message) == 1;
+        
+        // Send HTML notification emails to team members
+        emailService.sendInternalNotificationEmail("team@arecibo.ai", "benny@arecibo.ai", name, email, message);
+        emailService.sendInternalNotificationEmail("team@arecibo.ai", "sam@arecibo.ai", name, email, message);
+        
         return result && sendMessageResult;
     }
 
@@ -51,9 +54,10 @@ public class MainServiceImplement implements MainService {
             return SubscribeResult.ALREADY_SUBSCRIBED;
         }
         boolean result = databaseController.addSubscribe(email, LocalDateTime.now());
-        String subjectStr = "Thank you for subscribing";
-        String messageStr = "Your email "+email+" has been successfully subscribed to the Arecibo AI newsletter. \nPlease do not reply to this email. \n-- \nKind regards, \nThe Arecibo AI Team";
-        emailService.sendEmail("team@arecibo.ai", email, subjectStr, messageStr, "");
+        
+        // Send HTML subscription confirmation email
+        emailService.sendSubscriptionConfirmationEmail("team@arecibo.ai", email, email);
+        
         return result?SubscribeResult.SUCCESS:SubscribeResult.FAILED;
     }
 }

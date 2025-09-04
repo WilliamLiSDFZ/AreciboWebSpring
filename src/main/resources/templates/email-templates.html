@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arecibo AI Email Templates</title>
+    <style>
+        /* Reset styles for email clients */
+        body, table, td, p, a, li, blockquote {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+        table, td {
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+        img {
+            -ms-interpolation-mode: bicubic;
+        }
+        
+        /* Main styles */
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ffffff;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 28px;
+            font-weight: 300;
+        }
+        
+        .content {
+            padding: 40px 30px;
+            background-color: #ffffff;
+        }
+        
+        .greeting {
+            font-size: 18px;
+            color: #333333;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .message {
+            font-size: 16px;
+            color: #555555;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+        
+        .highlight-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 4px;
+        }
+        
+        .highlight-box h3 {
+            color: #333333;
+            margin: 0 0 10px 0;
+            font-size: 18px;
+        }
+        
+        .highlight-box p {
+            color: #666666;
+            margin: 0;
+            line-height: 1.6;
+        }
+        
+        .footer {
+            background-color: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .footer p {
+            color: #666666;
+            font-size: 14px;
+            margin: 5px 0;
+        }
+        
+        .social-links {
+            margin: 20px 0;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            margin: 0 10px;
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #ffffff;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        
+        .divider {
+            height: 1px;
+            background-color: #e9ecef;
+            margin: 30px 0;
+        }
+        
+        .contact-info {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .contact-info h4 {
+            color: #333333;
+            margin: 0 0 15px 0;
+            font-size: 16px;
+        }
+        
+        .contact-info p {
+            color: #666666;
+            margin: 5px 0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Contact Confirmation Email Template -->
+    <div class="email-container" id="contact-confirmation-template">
+        <div class="header">
+            <h1>Arecibo AI</h1>
+        </div>
+        
+        <div class="content">
+            <div class="greeting">
+                Hi {{name}},
+            </div>
+            
+            <div class="message">
+                Thank you for reaching out to us! We've received your message and appreciate you taking the time to contact Arecibo AI.
+            </div>
+            
+            <div class="highlight-box">
+                <h3>What happens next?</h3>
+                <p>Our team will review your message and get back to you within 24-48 hours. We're committed to providing you with the best possible support and assistance.</p>
+            </div>
+            
+            <div class="message">
+                If you have any urgent inquiries, please don't hesitate to reach out to us directly at <strong>team@arecibo.ai</strong>.
+            </div>
+            
+            <div class="contact-info">
+                <h4>Your Message Details:</h4>
+                <p><strong>From:</strong> {{name}} ({{email}})</p>
+                <p><strong>Message:</strong> {{message}}</p>
+                <p><strong>Submitted:</strong> {{timestamp}}</p>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <div style="text-align: center;">
+                <a href="https://arecibo.ai" class="cta-button">Visit Our Website</a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Arecibo AI Team</strong></p>
+            <p>Empowering the future with artificial intelligence</p>
+            <div class="social-links">
+                <a href="https://arecibo.ai">Website</a> |
+                <a href="mailto:team@arecibo.ai">Email</a>
+            </div>
+            <p style="font-size: 12px; color: #999999; margin-top: 20px;">
+                This is an automated message. Please do not reply to this email.
+            </p>
+        </div>
+    </div>
+
+    <!-- Subscription Confirmation Email Template -->
+    <div class="email-container" id="subscription-confirmation-template">
+        <div class="header">
+            <h1>Arecibo AI</h1>
+        </div>
+        
+        <div class="content">
+            <div class="greeting">
+                Welcome to Arecibo AI!
+            </div>
+            
+            <div class="message">
+                Thank you for subscribing to our newsletter! We're excited to have you join our community of AI enthusiasts and innovators.
+            </div>
+            
+            <div class="highlight-box">
+                <h3>🎉 You're all set!</h3>
+                <p>Your email <strong>{{email}}</strong> has been successfully added to our mailing list. You'll now receive updates about the latest developments in AI technology, exclusive insights, and exciting announcements from our team.</p>
+            </div>
+            
+            <div class="message">
+                Stay tuned for our next newsletter, where we'll share cutting-edge AI research, industry insights, and updates about Arecibo AI's latest innovations.
+            </div>
+            
+            <div class="highlight-box">
+                <h3>What to expect:</h3>
+                <p>• Monthly newsletters with AI industry updates<br>
+                • Exclusive research insights and analysis<br>
+                • Early access to new features and announcements<br>
+                • Special invitations to events and webinars</p>
+            </div>
+            
+            <div style="text-align: center;">
+                <a href="https://arecibo.ai" class="cta-button">Explore Arecibo AI</a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Arecibo AI Team</strong></p>
+            <p>Empowering the future with artificial intelligence</p>
+            <div class="social-links">
+                <a href="https://arecibo.ai">Website</a> |
+                <a href="mailto:team@arecibo.ai">Email</a>
+            </div>
+            <p style="font-size: 12px; color: #999999; margin-top: 20px;">
+                This is an automated message. Please do not reply to this email.<br>
+                To unsubscribe, please contact us at team@arecibo.ai
+            </p>
+        </div>
+    </div>
+
+    <!-- Internal Notification Email Template -->
+    <div class="email-container" id="internal-notification-template">
+        <div class="header">
+            <h1>Arecibo AI - New Contact</h1>
+        </div>
+        
+        <div class="content">
+            <div class="greeting">
+                New contact form submission received
+            </div>
+            
+            <div class="highlight-box">
+                <h3>Contact Details:</h3>
+                <p><strong>Name:</strong> {{name}}<br>
+                <strong>Email:</strong> {{email}}<br>
+                <strong>Message:</strong> {{message}}<br>
+                <strong>Submitted:</strong> {{timestamp}}</p>
+            </div>
+            
+            <div class="message">
+                Please review this contact request and respond to the user within 24-48 hours.
+            </div>
+            
+            <div style="text-align: center;">
+                <a href="mailto:{{email}}" class="cta-button">Reply to {{name}}</a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Arecibo AI Internal System</strong></p>
+            <p>This is an automated notification from the contact form system.</p>
+        </div>
+    </div>
+</body>
+</html>
