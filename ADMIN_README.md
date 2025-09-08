@@ -1,57 +1,58 @@
-# Arecibo AI 后台管理系统
+# Arecibo AI Admin Panel
 
-## 功能概述
+## Overview
 
-这是一个为Arecibo AI网站创建的简单后台管理系统，提供以下功能：
+This is a simple admin panel created for the Arecibo AI website, providing the following features:
 
-### 主要功能
-- 📊 **仪表板** - 显示系统统计数据和快速操作
-- 📧 **联系消息管理** - 查看、删除联系表单提交的消息
-- 👥 **订阅用户管理** - 管理邮件订阅用户列表
-- 📤 **数据导出** - 支持CSV格式导出联系消息和订阅用户数据
+### Main Features
+- 📊 **Dashboard** - Display system statistics and quick actions
+- 📧 **Contact Messages Management** - View and delete contact form submissions
+- 👥 **Subscribers Management** - Manage email subscription users
+- 📤 **Data Export** - Support CSV export for contact messages and subscriber data
 
-### 技术特性
-- 响应式设计，支持移动端访问
-- 分页显示，支持大量数据
-- 实时删除确认
-- 美观的Bootstrap UI界面
-- 简单的访问控制
+### Technical Features
+- Responsive design with mobile support
+- Pagination for large datasets
+- Real-time delete confirmation
+- Beautiful Bootstrap UI interface
+- Simple access control
+- Color scheme matching the main website
 
-## 访问方式
+## Access Instructions
 
-### 1. 启动应用
+### 1. Start Application
 ```bash
 mvn spring-boot:run
 ```
 
-### 2. 访问后台管理
-打开浏览器访问：`http://localhost:8080/admin/login`
+### 2. Access Admin Panel
+Open browser and visit: `http://localhost:8080/admin/login`
 
-### 3. 登录
-- 管理员密钥：`arecibo_admin_2025`
-- 输入密钥后点击登录即可进入后台
+### 3. Login
+- Admin Key: `arecibo_admin_2025`
+- Enter the key and click login to access the admin panel
 
-## 页面说明
+## Page Descriptions
 
-### 仪表板 (`/admin`)
-- 显示联系消息总数
-- 显示订阅用户总数
-- 系统状态概览
-- 快速操作按钮
+### Dashboard (`/admin`)
+- Display total contact messages count
+- Display total subscribers count
+- System status overview
+- Quick action buttons
 
-### 联系消息管理 (`/admin/contacts`)
-- 查看所有联系表单提交的消息
-- 支持分页浏览
-- 可以删除不需要的消息
-- 支持导出为CSV文件
-- 点击邮箱地址可直接发送邮件
+### Contact Messages Management (`/admin/contacts`)
+- View all contact form submissions
+- Support pagination browsing
+- Delete unwanted messages
+- Export to CSV file
+- Click email address to send email directly
 
-### 订阅用户管理 (`/admin/subscribers`)
-- 查看所有邮件订阅用户
-- 支持分页浏览
-- 可以删除订阅用户
-- 支持导出为CSV文件
-- 点击邮箱地址可直接发送邮件
+### Subscribers Management (`/admin/subscribers`)
+- View all email subscribers
+- Support pagination browsing
+- Delete subscribers
+- Export to CSV file
+- Click email address to send email directly
 
 ## 数据库表结构
 
@@ -75,63 +76,71 @@ CREATE TABLE subscribe (
 );
 ```
 
-## 安全说明
+## Security Notes
 
-⚠️ **重要安全提醒**：
-- 当前使用的是简单的密钥验证，仅适用于开发环境
-- 生产环境建议使用更安全的认证方式，如：
+⚠️ **Important Security Reminders**:
+- Currently using simple key authentication, suitable for development environment only
+- Production environment should use more secure authentication methods such as:
   - Spring Security + JWT
   - OAuth 2.0
-  - 数据库用户认证
-- 建议修改默认的管理员密钥
-- 建议添加HTTPS支持
+  - Database user authentication
+- Recommend changing the default admin key
+- Recommend adding HTTPS support
 
-## 扩展建议
+## Enhancement Suggestions
 
-### 短期改进
-1. 添加搜索功能
-2. 添加批量操作
-3. 添加数据统计图表
-4. 改进错误处理
+### Short-term Improvements
+1. Add search functionality
+2. Add batch operations
+3. Add data statistics charts
+4. Improve error handling
 
-### 长期规划
-1. 用户权限管理
-2. 操作日志记录
-3. 邮件发送历史
-4. 系统配置管理
-5. 数据备份功能
+### Long-term Planning
+1. User permission management
+2. Operation log recording
+3. Email sending history
+4. System configuration management
+5. Data backup functionality
 
-## 开发说明
+## Development Notes
 
-### 项目结构
+### Project Structure
 ```
 src/main/java/ai/arecibo/areciboweb/
 ├── controller/
-│   └── AdminController.java          # 后台管理控制器
+│   └── AdminController.java          # Admin management controller
 ├── service/
-│   ├── AdminService.java             # 后台管理服务接口
-│   └── AdminServiceImplement.java    # 后台管理服务实现
+│   ├── AdminService.java             # Admin service interface
+│   └── AdminServiceImplement.java    # Admin service implementation
 ├── dao/
-│   ├── DatabaseController.java       # 数据库访问接口（已扩展）
-│   └── DatabaseControllerImplement.java # 数据库访问实现（已扩展）
+│   ├── DatabaseController.java       # Database access interface (extended)
+│   └── DatabaseControllerImplement.java # Database access implementation (extended)
 └── config/
-    ├── AdminSecurityConfig.java      # 后台安全配置
-    └── AdminAccessInterceptor.java   # 访问拦截器
+    ├── AdminSecurityConfig.java      # Admin security configuration
+    └── AdminAccessInterceptor.java   # Access interceptor
 
 src/main/resources/templates/admin/
-├── index.html                        # 仪表板页面
-├── contacts.html                     # 联系消息管理页面
-├── subscribers.html                  # 订阅用户管理页面
-└── login.html                        # 登录页面
+├── index.html                        # Dashboard page
+├── contacts.html                     # Contact messages management page
+├── subscribers.html                  # Subscribers management page
+└── login.html                        # Login page
 ```
 
-### 依赖说明
+### Dependencies
 - Spring Boot 3.2.0
-- Thymeleaf 模板引擎
+- Thymeleaf template engine
 - Bootstrap 5.1.3
-- MySQL 数据库
-- Druid 连接池
+- MySQL database
+- Druid connection pool
 
-## 联系支持
+## Color Scheme
 
-如有问题或建议，请联系开发团队。
+The admin panel now uses the same color scheme as the main website:
+- **Sidebar**: Dark gray (#2c3e50) - matching the navigation bar
+- **Main content**: Light gray (#f8f9fa) - matching the main content area
+- **Primary buttons**: Blue (#007bff) - matching the website buttons
+- **Cards and UI elements**: Clean white with subtle shadows
+
+## Support
+
+For questions or suggestions, please contact the development team.

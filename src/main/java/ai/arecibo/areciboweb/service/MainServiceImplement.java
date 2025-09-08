@@ -35,14 +35,20 @@ public class MainServiceImplement implements MainService {
         }
         boolean result = databaseController.insertMessageToContact(name, email, message, LocalDateTime.now());
         
-        // Send HTML confirmation email to user
-        boolean sendMessageResult = emailService.sendContactConfirmationEmail("team@arecibo.ai", email, name, email, message) == 1;
+        // Try to send confirmation email to user, but don't fail the entire operation if email fails
+        try {
+            emailService.sendContactConfirmationEmail("team@arecibo.ai", email, name, email, message);
+            System.out.println("Confirmation email sent successfully to: " + email);
+        } catch (Exception e) {
+            System.err.println("Failed to send confirmation email to " + email + ": " + e.getMessage());
+        }
         
-        // Send HTML notification emails to team members
-        emailService.sendInternalNotificationEmail("team@arecibo.ai", "benny@arecibo.ai", name, email, message);
-        emailService.sendInternalNotificationEmail("team@arecibo.ai", "sam@arecibo.ai", name, email, message);
+        // Send HTML notification emails to team members (commented out for now due to server issues)
+//        emailService.sendInternalNotificationEmail("team@arecibo.ai", "benny@arecibo.ai", name, email, message);
+//        emailService.sendInternalNotificationEmail("team@arecibo.ai", "sam@arecibo.ai", name, email, message);
         
-        return result && sendMessageResult;
+        // Return true if database operation succeeded, regardless of email status
+        return result;
     }
 
     @Override
@@ -55,8 +61,13 @@ public class MainServiceImplement implements MainService {
         }
         boolean result = databaseController.addSubscribe(email, LocalDateTime.now());
         
-        // Send HTML subscription confirmation email
-        emailService.sendSubscriptionConfirmationEmail("team@arecibo.ai", email, email);
+        // Try to send subscription confirmation email, but don't fail the entire operation if email fails
+        try {
+            emailService.sendSubscriptionConfirmationEmail("team@arecibo.ai", email, email);
+            System.out.println("Subscription confirmation email sent successfully to: " + email);
+        } catch (Exception e) {
+            System.err.println("Failed to send subscription confirmation email to " + email + ": " + e.getMessage());
+        }
         
         return result?SubscribeResult.SUCCESS:SubscribeResult.FAILED;
     }

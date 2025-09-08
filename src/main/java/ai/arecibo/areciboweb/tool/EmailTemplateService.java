@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 public class EmailTemplateService {
 
     private static final String TEMPLATE_FILE = "templates/email-templates.html";
-    private static final Pattern TEMPLATE_PATTERN = Pattern.compile("id=\"([^\"]+)\"[^>]*>([\\s\\S]*?)</div>\\s*</div>\\s*</div>\\s*</body>");
+    private static final Pattern TEMPLATE_PATTERN = Pattern.compile("<div class=\"email-container\" id=\"([^\"]+)\">([\\s\\S]*?)</div>\\s*(?=<div class=\"email-container\"|</body>)");
     private static final Pattern VARIABLE_PATTERN = Pattern.compile("\\{\\{([^}]+)\\}\\}");
 
     /**
@@ -26,14 +26,40 @@ public class EmailTemplateService {
         ClassPathResource resource = new ClassPathResource(TEMPLATE_FILE);
         String content = new String(resource.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
         
-        Matcher matcher = TEMPLATE_PATTERN.matcher(content);
-        while (matcher.find()) {
-            if (templateId.equals(matcher.group(1))) {
-                return matcher.group(2);
+        // 查找模板开始标签
+        String startTag = "<div class=\"email-container\" id=\"" + templateId + "\">";
+        int startIndex = content.indexOf(startTag);
+        
+        if (startIndex == -1) {
+            throw new IllegalArgumentException("Template with ID '" + templateId + "' not found");
+        }
+        
+        // 查找对应的结束标签
+        int depth = 0;
+        int currentIndex = startIndex + startTag.length();
+        int endIndex = -1;
+        
+        while (currentIndex < content.length()) {
+            if (content.substring(currentIndex).startsWith("<div")) {
+                depth++;
+                currentIndex += 4;
+            } else if (content.substring(currentIndex).startsWith("</div>")) {
+                if (depth == 0) {
+                    endIndex = currentIndex;
+                    break;
+                }
+                depth--;
+                currentIndex += 6;
+            } else {
+                currentIndex++;
             }
         }
         
-        throw new IllegalArgumentException("Template with ID '" + templateId + "' not found");
+        if (endIndex == -1) {
+            throw new IllegalArgumentException("Template with ID '" + templateId + "' has invalid structure");
+        }
+        
+        return content.substring(startIndex + startTag.length(), endIndex);
     }
 
     /**
