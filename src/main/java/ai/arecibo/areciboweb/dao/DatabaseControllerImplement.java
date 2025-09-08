@@ -7,6 +7,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
 
 @Repository
 public class DatabaseControllerImplement implements DatabaseController {
@@ -61,5 +63,104 @@ public class DatabaseControllerImplement implements DatabaseController {
             return false;
         }
         return true;
+    }
+
+    // 新增的后台管理方法实现
+    @Override
+    public List<Map<String, Object>> getAllContacts(int offset, int limit) {
+        try {
+            return jdbcTemplate.queryForList(
+                "SELECT contact_id, name, email, message, time FROM contact ORDER BY time DESC LIMIT ? OFFSET ?", 
+                limit, offset
+            );
+        } catch (Exception e) {
+            logger.error("Error getting contacts from database", e);
+            return List.of();
+        }
+    }
+
+    @Override
+    public int getContactCount() {
+        try {
+            Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM contact", Integer.class);
+            return count != null ? count : 0;
+        } catch (Exception e) {
+            logger.error("Error getting contact count from database", e);
+            return 0;
+        }
+    }
+
+    @Override
+    public List<Map<String, Object>> getAllSubscribers(int offset, int limit) {
+        try {
+            return jdbcTemplate.queryForList(
+                "SELECT subscribe_id, email, time FROM subscribe ORDER BY time DESC LIMIT ? OFFSET ?", 
+                limit, offset
+            );
+        } catch (Exception e) {
+            logger.error("Error getting subscribers from database", e);
+            return List.of();
+        }
+    }
+
+    @Override
+    public int getSubscriberCount() {
+        try {
+            Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM subscribe", Integer.class);
+            return count != null ? count : 0;
+        } catch (Exception e) {
+            logger.error("Error getting subscriber count from database", e);
+            return 0;
+        }
+    }
+
+    @Override
+    public boolean deleteContact(int contactId) {
+        try {
+            int rowsAffected = jdbcTemplate.update("DELETE FROM contact WHERE contact_id = ?", contactId);
+            return rowsAffected > 0;
+        } catch (Exception e) {
+            logger.error("Error deleting contact from database", e);
+            return false;
+        }
+    }
+
+    @Override
+    public boolean deleteSubscriber(int subscriberId) {
+        try {
+            int rowsAffected = jdbcTemplate.update("DELETE FROM subscribe WHERE subscribe_id = ?", subscriberId);
+            return rowsAffected > 0;
+        } catch (Exception e) {
+            logger.error("Error deleting subscriber from database", e);
+            return false;
+        }
+    }
+
+    @Override
+    public Map<String, Object> getContactById(int contactId) {
+        try {
+            List<Map<String, Object>> results = jdbcTemplate.queryForList(
+                "SELECT contact_id, name, email, message, time FROM contact WHERE contact_id = ?", 
+                contactId
+            );
+            return results.isEmpty() ? null : results.get(0);
+        } catch (Exception e) {
+            logger.error("Error getting contact by id from database", e);
+            return null;
+        }
+    }
+
+    @Override
+    public Map<String, Object> getSubscriberById(int subscriberId) {
+        try {
+            List<Map<String, Object>> results = jdbcTemplate.queryForList(
+                "SELECT subscribe_id, email, time FROM subscribe WHERE subscribe_id = ?", 
+                subscriberId
+            );
+            return results.isEmpty() ? null : results.get(0);
+        } catch (Exception e) {
+            logger.error("Error getting subscriber by id from database", e);
+            return null;
+        }
     }
 }
