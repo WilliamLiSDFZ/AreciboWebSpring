@@ -27,4 +27,17 @@ public interface DatabaseController {
     Map<String, Object> getContactById(int contactId);
     
     Map<String, Object> getSubscriberById(int subscriberId);
+    
+    // Passcode related methods
+    boolean validatePasscode(String passcode);
+    
+    boolean updateLastLogin(String passcode, LocalDateTime loginTime);
+    
+    List<Map<String, Object>> getAllPasscodes(int offset, int limit);
+    
+    int getPasscodeCount();
+    
+    boolean addPasscode(String passcode, LocalDateTime time);
+    
+    boolean deletePasscode(int passcodeId);
 }

@@ -1,6 +1,7 @@
 package ai.arecibo.areciboweb.controller;
 
 import ai.arecibo.areciboweb.service.AdminService;
+import ai.arecibo.areciboweb.service.PasscodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,9 @@ public class AdminController {
 
     @Autowired
     private AdminService adminService;
+
+    @Autowired
+    private PasscodeService passcodeService;
 
     /**
      * 管理员登录页面
@@ -132,5 +136,65 @@ public class AdminController {
     @ResponseBody
     public String exportSubscribers() {
         return adminService.exportSubscribersToCsv();
+    }
+
+    /**
+     * Passcode管理页面
+     */
+    @GetMapping("/passcodes")
+    public String passcodes(@RequestParam(defaultValue = "1") int page, 
+                           @RequestParam(defaultValue = "10") int size,
+                           Model model) {
+        List<Map<String, Object>> passcodes = passcodeService.getPasscodes(page, size);
+        int totalCount = passcodeService.getPasscodeCount();
+        int totalPages = (int) Math.ceil((double) totalCount / size);
+        
+        model.addAttribute("passcodes", passcodes);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("totalCount", totalCount);
+        model.addAttribute("pageSize", size);
+        
+        return "admin/passcodes";
+    }
+
+    /**
+     * 添加新的passcode
+     */
+    @PostMapping("/passcodes/add")
+    @ResponseBody
+    public Map<String, Object> addPasscode(@RequestParam String passcode) {
+        Map<String, Object> response = new HashMap<>();
+        boolean success = passcodeService.addPasscode(passcode);
+        
+        if (success) {
+            response.put("code", 0);
+            response.put("message", "Passcode added successfully");
+        } else {
+            response.put("code", 1);
+            response.put("message", "Failed to add passcode");
+        }
+        
+        return response;
+    }
+
+    /**
+     * 删除passcode
+     */
+    @PostMapping("/passcodes/{id}/delete")
+    @ResponseBody
+    public Map<String, Object> deletePasscode(@PathVariable int id) {
+        Map<String, Object> response = new HashMap<>();
+        boolean success = passcodeService.deletePasscode(id);
+        
+        if (success) {
+            response.put("code", 0);
+            response.put("message", "Passcode deleted successfully");
+        } else {
+            response.put("code", 1);
+            response.put("message", "Failed to delete passcode");
+        }
+        
+        return response;
     }
 }

@@ -163,4 +163,79 @@ public class DatabaseControllerImplement implements DatabaseController {
             return null;
         }
     }
+
+    // Passcode related methods implementation
+    @Override
+    public boolean validatePasscode(String passcode) {
+        try {
+            Integer count = jdbcTemplate.queryForObject(
+                "SELECT COUNT(*) FROM passcode WHERE passcode = ?", 
+                Integer.class, passcode
+            );
+            return count != null && count > 0;
+        } catch (Exception e) {
+            logger.error("Error validating passcode", e);
+            return false;
+        }
+    }
+
+    @Override
+    public boolean updateLastLogin(String passcode, LocalDateTime loginTime) {
+        try {
+            int rowsAffected = jdbcTemplate.update(
+                "UPDATE passcode SET last_loin = ? WHERE passcode = ?", 
+                loginTime, passcode
+            );
+            return rowsAffected > 0;
+        } catch (Exception e) {
+            logger.error("Error updating last login time", e);
+            return false;
+        }
+    }
+
+    @Override
+    public List<Map<String, Object>> getAllPasscodes(int offset, int limit) {
+        try {
+            return jdbcTemplate.queryForList(
+                "SELECT passcode_id, passcode, time, last_loin FROM passcode ORDER BY time DESC LIMIT ? OFFSET ?", 
+                limit, offset
+            );
+        } catch (Exception e) {
+            logger.error("Error getting passcodes from database", e);
+            return List.of();
+        }
+    }
+
+    @Override
+    public int getPasscodeCount() {
+        try {
+            Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM passcode", Integer.class);
+            return count != null ? count : 0;
+        } catch (Exception e) {
+            logger.error("Error getting passcode count from database", e);
+            return 0;
+        }
+    }
+
+    @Override
+    public boolean addPasscode(String passcode, LocalDateTime time) {
+        try {
+            jdbcTemplate.update("INSERT INTO passcode (passcode, time) VALUES (?, ?)", passcode, time);
+            return true;
+        } catch (Exception e) {
+            logger.error("Error adding passcode to database", e);
+            return false;
+        }
+    }
+
+    @Override
+    public boolean deletePasscode(int passcodeId) {
+        try {
+            int rowsAffected = jdbcTemplate.update("DELETE FROM passcode WHERE passcode_id = ?", passcodeId);
+            return rowsAffected > 0;
+        } catch (Exception e) {
+            logger.error("Error deleting passcode from database", e);
+            return false;
+        }
+    }
 }

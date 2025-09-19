@@ -53,13 +53,13 @@
         
         <form id="loginForm">
             <div class="mb-3">
-                <label for="adminKey" class="form-label">Admin Key</label>
+                <label for="passcode" class="form-label">Passcode</label>
                 <div class="input-group">
                     <span class="input-group-text">
-                        <i class="bi bi-key"></i>
+                        <i class="bi bi-shield-lock"></i>
                     </span>
-                    <input type="password" class="form-control" id="adminKey" 
-                           placeholder="Enter admin key" required>
+                    <input type="password" class="form-control" id="passcode" 
+                           placeholder="Enter passcode" required>
                 </div>
             </div>
             
@@ -72,7 +72,7 @@
         
         <div class="text-center mt-3">
             <small class="text-muted">
-                Note: Please contact system administrator for access key
+                Note: Please contact system administrator for passcode
             </small>
         </div>
     </div>
@@ -82,12 +82,12 @@
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const adminKey = document.getElementById('adminKey').value;
-            if (adminKey) {
-                // Redirect to admin page with key
-                window.location.href = '/admin?admin_key=' + encodeURIComponent(adminKey);
+            const passcode = document.getElementById('passcode').value;
+            if (passcode) {
+                // Redirect to admin page with passcode
+                window.location.href = '/admin?passcode=' + encodeURIComponent(passcode);
             } else {
-                alert('Please enter admin key');
+                alert('Please enter passcode');
             }
         });
     </script>
