@@ -12,45 +12,31 @@ A simple web application for contact form processing, email subscriptions, and a
 
 ### 1. Setup Google Cloud
 ```bash
-# Install Google Cloud SDK
-curl https://sdk.cloud.google.com | bash
-exec -l $SHELL
+# Install Google Cloud SDK first
 
 # Login and set project
 gcloud auth login
-gcloud config set project YOUR_PROJECT_ID
+gcloud config set project YOUR_PROJECT_ID # Remember this project ID
 
 # Enable APIs
 gcloud services enable appengine.googleapis.com
 gcloud services enable sqladmin.googleapis.com
 ```
 
-### 2. Create Database
-```bash
-# Create Cloud SQL instance
-gcloud sql instances create arecibo-mysql \
-    --database-version=MYSQL_8_0 \
-    --tier=db-f1-micro \
-    --region=us-central1
+### 2. Create MySQL Database on Google Cloud Platform
+Go to Google Cloud Console and create a MySQL 8.0 database:
 
-# Create database and user
-gcloud sql databases create arecibo_web --instance=arecibo-mysql
-gcloud sql users create arecibo_user --instance=arecibo-mysql --password=YOUR_PASSWORD
-```
+1. **Go to Cloud SQL**: https://console.cloud.google.com/sql
+2. **Create Instance**: Click "Create Instance"
+3. **Choose MySQL**: Select "MySQL"
+4. **Version**: Choose MySQL 8.0
+5. **Instance ID**: `arecibo`
+6. **Password**: Set a secure password
+7. **Region**: Choose `us-central1`
+8. **Create**: Click "Create"
 
-### 3. Configure Database
-Update `src/main/resources/application-cloud.yml` with your details (app.yaml is already configured):
-```yaml
-spring:
-  datasource:
-    url: jdbc:mysql://google/arecibo_web?cloudSqlInstance=/cloudsql/YOUR_PROJECT_ID:us-central1:arecibo-mysql&socketFactory=com.google.cloud.sql.mysql.SocketFactory&useSSL=false
-    username: arecibo_user
-    password: YOUR_PASSWORD
-  
-  mail:
-    username: your_email@gmail.com
-    password: YOUR_GMAIL_APP_PASSWORD
-```
+### 3. Get Ready to Deploy
+Open `application.yml` and change the `spring.datasource.url`, `spring.datasource.username` and `spring.datasource.password` to the new database credentials.
 
 ### 4. Deploy
 ```bash
@@ -84,33 +70,46 @@ fetch('https://YOUR_PROJECT_ID.appspot.com/api/subscribe', {
 
 ## 🔧 Setup Database Tables
 
-Connect to your Cloud SQL instance and run:
+Connect to your Cloud SQL MySQL instance and create the database:
 
-```sql
-USE arecibo_web;
-
-CREATE TABLE contact (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL,
-    message TEXT NOT NULL,
-    time DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE subscribe (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    time DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE passcode (
-    passcode_id INT AUTO_INCREMENT PRIMARY KEY,
-    passcode VARCHAR(100) NOT NULL UNIQUE,
-    time DATETIME DEFAULT CURRENT_TIMESTAMP,
-    last_login DATETIME NULL
-);
-
-INSERT INTO passcode (passcode) VALUES ('arecibo_admin_2025');
-```
-
-That's it! Your app is ready to use.
+1. **Connect to MySQL**: Use any MySQL client (MySQL Workbench, phpMyAdmin, or command line)
+2. **Create Database**: 
+   ```sql
+   CREATE DATABASE areciboai;
+   ```
+3. **Use Database and Create Tables**:
+   ```sql
+   USE areciboai;
+    
+    create table contact
+    (
+        contact_id int auto_increment
+            primary key,
+        name       varchar(255) not null,
+        email      varchar(255) not null,
+        message    text         not null,
+        time       timestamp    not null
+    )
+        engine = InnoDB;
+    
+    create table subscribe
+    (
+        subscribe_id int auto_increment
+            primary key,
+        email        varchar(255) not null,
+        time         timestamp    not null
+    )
+        engine = InnoDB;
+    
+    create table passcode
+    (
+        passcode_id int auto_increment
+            primary key,
+        passcode    varchar(255) not null,
+        time        timestamp    not null default current_timestamp(),
+        last_loin   timestamp    null
+    )
+        engine = InnoDB;
+    
+    INSERT INTO passcode (passcode) VALUES ('arecibo_admin_2025');
+    ```
