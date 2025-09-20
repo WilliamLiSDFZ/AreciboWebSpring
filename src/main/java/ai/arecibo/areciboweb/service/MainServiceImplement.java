@@ -44,8 +44,8 @@ public class MainServiceImplement implements MainService {
         }
         
         // Send HTML notification emails to team members (commented out for now due to server issues)
-//        emailService.sendInternalNotificationEmail("team@arecibo.ai", "benny@arecibo.ai", name, email, message);
-//        emailService.sendInternalNotificationEmail("team@arecibo.ai", "sam@arecibo.ai", name, email, message);
+        emailService.sendInternalNotificationEmail("team@arecibo.ai", "benny@arecibo.ai", name, email, message);
+        emailService.sendInternalNotificationEmail("team@arecibo.ai", "sam@arecibo.ai", name, email, message);
         
         // Return true if database operation succeeded, regardless of email status
         return result;

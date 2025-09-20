@@ -31,7 +31,7 @@ public class MainController {
 
         String googleResponse = Request.post("https://www.google.com/recaptcha/api/siteverify")
                 .bodyForm(Form.form()
-                        .add("secret", "6LdLkKArAAAAAJcY-4H-bofOFZO8pxHEWRo82cpQ")
+                        .add("secret", "")
                         .add("response", contactRequest.getToken())
                         .build())
                 .execute().returnContent().asString();
