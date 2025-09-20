@@ -21,7 +21,6 @@ gcloud config set project YOUR_PROJECT_ID # Remember this project ID
 
 # Enable APIs
 gcloud services enable appengine.googleapis.com
-gcloud services enable sqladmin.googleapis.com
 ```
 
 ### 2. Create MySQL Database on Google Cloud Platform
