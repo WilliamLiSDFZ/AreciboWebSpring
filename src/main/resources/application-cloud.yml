@@ -1,0 +1,26 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:mysql://google/arecibo_web?cloudSqlInstance=/cloudsql/YOUR_PROJECT_ID:us-central1:arecibo-mysql&socketFactory=com.google.cloud.sql.mysql.SocketFactory&useSSL=false
+    username: arecibo_user
+    password: YOUR_SECURE_PASSWORD
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: your_email@gmail.com
+    password: YOUR_GMAIL_APP_PASSWORD
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+logging:
+  level:
+    ai.arecibo.areciboweb: INFO
+    org.springframework: WARN
