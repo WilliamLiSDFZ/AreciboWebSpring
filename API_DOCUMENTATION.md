@@ -8,20 +8,24 @@
 ### Contact Form
 **POST /api/contact**
 ```javascript
-$.ajax({
-    url: 'https://YOUR_PROJECT_ID.appspot.com/api/contact',
-    type: 'POST',
-    data: $('#contactForm').serialize(),
-    success: function(response) {
-        if (response.success) {
-            alert('Message sent successfully!');
-            $('#contactForm')[0].reset();
-        }
+$$.ajax({
+    type: "POST",
+    url: "https://YOUR_PROJECT_ID.appspot.com/api/contact",
+    contentType: "application/json",
+    dataType: "json",
+    data: JSON.stringify({
+        name: $("#contact-name").val(),
+        email: $("#contact-email").val(),
+        message: $("#contact-message").val(),
+        token: token
+    }),
+    success: function (data) {
+        
     },
-    error: function() {
-        alert('Failed to send message');
+    error: function (data) {
+        
     }
-});
+})
 ```
 
 **Parameters**:
@@ -33,19 +37,20 @@ $.ajax({
 **POST /api/subscribe**
 ```javascript
 $.ajax({
-    url: 'https://YOUR_PROJECT_ID.appspot.com/api/subscribe',
-    type: 'POST',
-    data: $('#subscribeForm').serialize(),
-    success: function(response) {
-        if (response.success) {
-            alert('Subscription successful!');
-            $('#subscribeForm')[0].reset();
-        }
+    type: "POST",
+    url: "https://YOUR_PROJECT_ID.appspot.com/api/subscribe",
+    contentType: "application/json",
+    dataType: "json",
+    data: JSON.stringify({
+        email: email
+    }),
+    success: function (data) {
+        
     },
-    error: function() {
-        alert('Subscription failed');
+    error: function (data) {
+        
     }
-});
+})
 ```
 
 **Parameters**:

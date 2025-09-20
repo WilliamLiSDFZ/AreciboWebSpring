@@ -1,12 +1,13 @@
 # Arecibo AI Backend Management System
 
-A simple web application for contact form processing, email subscriptions, and admin management.
+A simple backend application for contact form processing, email subscriptions, and admin management.
 
 ## ✨ Features
-- Contact form processing
+- Contact form processing with Google reCAPTCHA protection
 - Email subscription management  
 - Admin dashboard
 - Automatic email notifications
+- Spam protection and security
 
 ## 🚀 Quick Deploy to Google App Engine
 
@@ -66,6 +67,27 @@ fetch('https://YOUR_PROJECT_ID.appspot.com/api/subscribe', {
     method: 'POST', 
     body: new FormData(subscribeForm)
 });
+```
+
+## 🔒 Google reCAPTCHA Setup
+
+### 1. Get reCAPTCHA Keys
+1. Go to Google reCAPTCHA Admin Console: https://www.google.com/recaptcha/admin
+2. Click "Create" to add a new site
+3. Choose "reCAPTCHA v2" → "I'm not a robot" Checkbox
+4. Add your domain: `YOUR_PROJECT_ID.appspot.com`
+5. Get your **Site Key** and **Secret Key**
+
+### 2. Configure Backend
+Update the `MainController` line 34 with new reCAPTCHA secret key:
+
+### 3. Frontend Integration
+Add reCAPTCHA to your contact form:
+```html
+<div class="g-recaptcha" data-sitekey="YOUR_KEY"></div>
+
+<!-- Include reCAPTCHA script -->
+<script src="https://www.google.com/recaptcha/api.js"></script>
 ```
 
 ## 🔧 Setup Database Tables
